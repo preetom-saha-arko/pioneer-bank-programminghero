@@ -81,9 +81,15 @@
         depositBtn.addEventListener("click",function(){
             const depositInput = document.getElementById("depositInput").value;  // a string
             const depositAmount = parseFloat(depositInput);
+
+            if(depositAmount < 0){
+                alert("Deposit amount cannot be negative");
+            }
+            else{
+                updateSpanText("currentDeposit", depositAmount);
+                updateSpanText("currentBalance", depositAmount);
+            }            
             
-            updateSpanText("currentDeposit", depositAmount);
-            updateSpanText("currentBalance", depositAmount);
 
             document.getElementById("depositInput").value = "";
         })
@@ -93,13 +99,21 @@
             const withdrawInput = document.getElementById("withdrawInput").value;
             const withdrawAmount = parseFloat(withdrawInput);
 
-            const currentBalance = document.getElementById("currentBalance").innerText; // string
-            const currentBalanceNum = parseFloat(currentBalance);
+            if(withdrawAmount < 0){
+                alert("Withdraw amount cannot be negative");
+            }
+            else{
+                const currentBalance = document.getElementById("currentBalance").innerText; // string
+                const currentBalanceNum = parseFloat(currentBalance);
 
-            if(withdrawAmount <= currentBalanceNum){
-                // withdraw only if it is possible
-                updateSpanText("currentWithdraw", withdrawAmount);
-                updateSpanText("currentBalance", -withdrawAmount); // subtract
+                if(withdrawAmount <= currentBalanceNum){
+                    // withdraw only if it is possible
+                    updateSpanText("currentWithdraw", withdrawAmount);
+                    updateSpanText("currentBalance", -withdrawAmount); // subtract
+                }
+                else{
+                    alert("You cannot withdraw money larger than your current balance");
+                }
             }
 
             document.getElementById("withdrawInput").value = ""; 
